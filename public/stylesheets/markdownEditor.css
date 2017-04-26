@@ -1,0 +1,19 @@
+.markdown-body {
+    height: 100%;
+}
+
+.markdown_editor {
+    border: 0;
+    resize: none;
+    float: left;
+    height: 100%;
+}
+
+.markdown_preview {
+    float: right;
+    overflow:scroll;
+}
+
+html, body, div {
+    height: 100%;
+}
