@@ -7,18 +7,42 @@ var bodyParser = require('body-parser');
 var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackConfig = require('./config/webpack.config');
+var orm = require("orm");
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var editor = require('./routes/editor');
+var register = require('./routes/register');
+var dashboard = require('./routes/dashboard');
 
 var app = express();
+
+//orm
+app.use(orm.express("mysql://root:123456@localhost:3306/blog", {
+    define: function(db, models, next) {
+        models.User = db.define("user", {
+            id: { type: 'serial', key:true },
+            name: String,
+            username: String,
+            password: String,
+						createdate: Date,
+						lastlogindate:Date
+        });
+				// db.drop(function(){
+					models.User.sync(function() {
+	            // created tables for Person model
+	        });
+				// });
+        next();
+    }
+}));
 
 //webpack setup
 var compiler = webpack(webpackConfig);
 app.use(webpackDevMiddleware(compiler, {
-	noInfo: true, publicPath: webpackConfig.output.publicPath
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath
 }));
 
 // view engine setup
@@ -37,6 +61,8 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
 app.use('/editor', editor);
+app.use('/register', register);
+app.use('/dashboard', dashboard);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,5 +1,9 @@
 extends layout
 
+append extraHeader
+  link(rel='stylesheet',href = '/stylesheets/markdownEditor.css')
+  link(rel='stylesheet',href = '//cdn.bootcss.com/github-markdown-css/2.6.0/github-markdown.min.css')
 block content
+  button.btn.btn-primary.col-md-12(type="button") Submit
   #markdown
   script(src='static/markdown.js')
