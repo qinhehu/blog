@@ -16,6 +16,8 @@ router.post('/', function(req, res, next) {
             return res.send(err);
         }
         if (results > 0) {
+
+            
             return res.redirect('dashboard');
         }
         // res.send(JSON.stringify(users));

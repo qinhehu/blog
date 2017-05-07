@@ -1,5 +1,50 @@
 extends layout
 
+append extraHeader
+  link(rel='stylesheet',href = '/stylesheets/style.css')
 block content
-  h1= title
-  p Welcome to #{title}
+  div.row
+    div.col-md-9
+      div.article-preview
+        div.content.row
+          p.col-md-3 test
+          p.col-md-3 test
+          p.col-md-6.text-right test
+        div.content.media
+          div.media-left
+            img.img-thumbnail(src="http://img.zcool.cn/community/01706757efb4bca84a0e282b26b4a0.jpg@900w_1l_2o_100sh.jpg")
+          div.media-right(style="margin-left:50px;")
+            p.lead testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+            p testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttests
+      div.article-preview
+        div.content.row
+          p.col-md-3 test
+          p.col-md-3 test
+          p.col-md-6.text-right test
+        div.content.media
+          div.media-left
+            img.img-thumbnail(src="http://img.zcool.cn/community/01706757efb4bca84a0e282b26b4a0.jpg@900w_1l_2o_100sh.jpg")
+          div.media-right(style="margin-left:50px;")
+            p.lead testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+            p testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttests
+    div.col-md-3
+      div.article-preview
+        div.content
+          p.text-center 分类
+          ul.list-group
+            li.list-group-item
+              | android
+              span.badge 14
+            li.list-group-item
+              | iOS
+              span.badge 14
+      div.article-preview
+        div.content
+          p.text-center 文章
+          ul.list-group
+            li.list-group-item
+              | 5月
+              span.badge 14
+            li.list-group-item
+              | 4月
+              span.badge 14

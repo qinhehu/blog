@@ -1,8 +1,25 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: rgb(235, 235, 235);
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
+}
+p {
+  word-break:break-word;
+}
+.article-preview {
+    padding: 50px;
+    background-color: white;
+    margin-bottom: 50px;
+}
+
+.content {
+}
+
+.content img {
+    width: 500px;
+    height: 300px;
 }
