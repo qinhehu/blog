@@ -4,6 +4,33 @@ append extraHeader
   link(rel='stylesheet',href = '/stylesheets/markdownEditor.css')
   link(rel='stylesheet',href = '//cdn.bootcss.com/github-markdown-css/2.6.0/github-markdown.min.css')
 block content
-  button.btn.btn-primary.col-md-12(type="button") Submit
+  button.btn.btn-primary.col-md-12(type="button",data-toggle="modal",data-target="#myModal") 提交
   #markdown
   script(src='static/markdown.js')
+  .modal.fade#myModal(tabindex="-1",role="dialog",aria-labelledby="myModalLabel",aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type="button",data-dismiss="modal",aria-hidden="true") x
+          h4.modal-title#myModalLabel 提醒
+        .modal-body
+          input.form-control#title(type="text",placeholder="起个标题吧")
+        .modal-footer
+          button.btn.btn-default(type="button",data-dismiss="modal") 关闭
+          button.btn.btn-primary#upload(type="button") 提交
+  script.
+    $(document).ready(function(){
+      $("button#upload").click(function(){
+        console.log($("#title").val());
+        $.post('/editor/jquerytest',{content:$(".markdown_preview").html(),title:$("#title").val()},function(data){
+          if(data == 1){
+            $("button#upload").text("SUCCESS");
+            $("button#upload").attr({"disabled":"disabled"});
+            console.log("success");
+          }else{
+            $("button#upload").text("FAILD,TRY TO REATY");
+            console.log("faild");
+          }
+        });
+      });
+    });

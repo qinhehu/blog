@@ -19,6 +19,15 @@ var dashboard = require('./routes/dashboard');
 var app = express();
 
 //orm
+// app.use(orm.express("mysql://root:123456@localhost:3306/blog",{
+//   define: function(db,models,next){
+//     db.load('./app/models/users','./app/models/articles',function(err){
+//
+//     });
+//     db.sync()
+//   }
+// }));
+
 app.use(orm.express("mysql://root:123456@localhost:3306/blog", {
     define: function(db, models, next) {
         models.User = db.define("user", {
@@ -31,6 +40,24 @@ app.use(orm.express("mysql://root:123456@localhost:3306/blog", {
         });
 				// db.drop(function(){
 					models.User.sync(function() {
+	            // created tables for Person model
+	        });
+				// });
+        next();
+    }
+}));
+app.use(orm.express("mysql://root:123456@localhost:3306/blog", {
+    define: function(db, models, next) {
+        models.Articles = db.define("articles", {
+            id: { type: 'serial', key:true },
+            headline: String,
+            subtitle: String,
+            path: String,
+						createdate: Date,
+						lasteditdate:Date
+        });
+				// db.drop(function(){
+					models.Articles.sync(function() {
 	            // created tables for Person model
 	        });
 				// });
