@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackConfig = require('./config/webpack.config');
-var orm = require("orm");
+var models = require('./app/models/');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -18,58 +18,11 @@ var dashboard = require('./routes/dashboard');
 
 var app = express();
 
-//orm
-// app.use(orm.express("mysql://root:123456@localhost:3306/blog",{
-//   define: function(db,models,next){
-//     db.load('./app/models/users','./app/models/articles',function(err){
-//
-//     });
-//     db.sync()
-//   }
-// }));
-
-app.use(orm.express("mysql://root:123456@localhost:3306/blog", {
-    define: function(db, models, next) {
-        models.User = db.define("user", {
-            id: { type: 'serial', key:true },
-            name: String,
-            username: String,
-            password: String,
-						createdate: Date,
-						lastlogindate:Date
-        });
-				// db.drop(function(){
-					models.User.sync(function() {
-	            // created tables for Person model
-	        });
-				// });
-        next();
-    }
-}));
-app.use(orm.express("mysql://root:123456@localhost:3306/blog", {
-    define: function(db, models, next) {
-        models.Articles = db.define("articles", {
-            id: { type: 'serial', key:true },
-            headline: String,
-            subtitle: String,
-            path: String,
-						createdate: Date,
-						lasteditdate:Date
-        });
-				// db.drop(function(){
-					models.Articles.sync(function() {
-	            // created tables for Person model
-	        });
-				// });
-        next();
-    }
-}));
-
 //webpack setup
 var compiler = webpack(webpackConfig);
 app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath
+  noInfo: true,
+  publicPath: webpackConfig.output.publicPath
 }));
 
 // view engine setup
@@ -84,6 +37,19 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function(req, res, next) {
+  models(function(err, db) {
+    console.log("1");
+    if (err)
+      return next(err);
+
+    req.models = db.models;
+    req.db = db;
+
+    return next();
+  });
+});
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
@@ -93,22 +59,22 @@ app.use('/dashboard', dashboard);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development'
-        ? err
-        : {};
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development'
+    ? err
+    : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
 module.exports = app;

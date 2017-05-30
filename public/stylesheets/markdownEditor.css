@@ -1,19 +1,23 @@
+#markdown {
+  height: 100%;
+}
+
 .markdown-body {
-    height: 100%;
+  height: 100%;
 }
 
 .markdown_editor {
-    border: 0;
-    resize: none;
-    float: left;
-    height: 100%;
+  border: 0;
+  resize: none;
+  float: left;
+  height: 100%;
 }
 
 .markdown_preview {
-    float: right;
-    overflow:scroll;
+  float: right;
+  overflow: scroll;
 }
 
-#markdown {
-    height: 100%;
+html, body {
+  height: 100%;
 }
