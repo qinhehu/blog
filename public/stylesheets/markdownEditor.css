@@ -16,6 +16,7 @@
 .markdown_preview {
   float: right;
   overflow: scroll;
+  height: 100%;
 }
 
 html, body {

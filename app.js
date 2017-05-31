@@ -39,7 +39,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   models(function(err, db) {
-    console.log("1");
     if (err)
       return next(err);
 

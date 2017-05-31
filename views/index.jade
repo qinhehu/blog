@@ -2,31 +2,12 @@ extends layout
 
 append extraHeader
   link(rel='stylesheet',href = '/stylesheets/style.css')
+  link(rel='stylesheet',href = '//cdn.bootcss.com/github-markdown-css/2.6.0/github-markdown.min.css')
 block content
   div.row
     div.col-md-9
-      div.article-preview
-        div.content.row
-          p.col-md-3 test
-          p.col-md-3 test
-          p.col-md-6.text-right test
-        div.content.media
-          div.media-left
-            img.img-thumbnail(src="http://img.zcool.cn/community/01706757efb4bca84a0e282b26b4a0.jpg@900w_1l_2o_100sh.jpg")
-          div.media-right(style="margin-left:50px;")
-            p.lead testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-            p testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttests
-      div.article-preview
-        div.content.row
-          p.col-md-3 test
-          p.col-md-3 test
-          p.col-md-6.text-right test
-        div.content.media
-          div.media-left
-            img.img-thumbnail(src="http://img.zcool.cn/community/01706757efb4bca84a0e282b26b4a0.jpg@900w_1l_2o_100sh.jpg")
-          div.media-right(style="margin-left:50px;")
-            p.lead testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-            p testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttests
+      #content
+      script(src='static/article_preview.js')
     div.col-md-3
       div.article-preview
         div.content

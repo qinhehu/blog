@@ -2,7 +2,8 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
-        markdown:'./react/markdown.js'
+        markdown:'./react/markdown.js',
+        article_preview:'./react/article_preview.js'
     },
     output: {
         path: __dirname + '/static',

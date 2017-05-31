@@ -15,6 +15,8 @@ block content
           h4.modal-title#myModalLabel 提醒
         .modal-body
           input.form-control#title(type="text",placeholder="起个标题吧")
+          br
+          input.form-control#img(type="text",placeholder="首页美图")
         .modal-footer
           button.btn.btn-default(type="button",data-dismiss="modal") 关闭
           button.btn.btn-primary#upload(type="button") 提交
@@ -22,7 +24,7 @@ block content
     $(document).ready(function(){
       $("button#upload").click(function(){
         console.log($("#title").val());
-        $.post('/editor/jquerytest',{content:$(".markdown_preview").html(),title:$("#title").val()},function(data){
+        $.post('/editor/uploadInfo',{content:$(".markdown_preview").html(),title:$("#title").val(),imgpath:$("#img").val()},function(data){
           if(data == 1){
             $("button#upload").text("SUCCESS");
             $("button#upload").attr({"disabled":"disabled"});

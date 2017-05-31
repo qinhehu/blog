@@ -5,8 +5,8 @@ var path = require('path');
 var qiniu = require("qiniu");
 
 //需要填写你的 Access Key 和 Secret Key
-qiniu.conf.ACCESS_KEY = 'XH6idex6aFNQ2D1ekX3_JEo2cPgb7wEQnZXcFksJ';
-qiniu.conf.SECRET_KEY = 'CToiOE-p9eQgpSxft7odABrlN19QS1_YJGD8UW9x';
+qiniu.conf.ACCESS_KEY = '';
+qiniu.conf.SECRET_KEY = '';
 
 fileName = "article.txt";
 
@@ -17,16 +17,17 @@ bucket = 'blog';
 //要上传文件的本地路径
 filePath = path.resolve(__dirname, '..') + '/' + fileName
 //构建私有空间的链接
-url = 'http://opz7jf7ut.bkt.clouddn.com/';
+url = '';
 var policy = new qiniu.rs.GetPolicy();
 
 router.get('/', function(req, res, next) {
   res.render('editor');
 });
 
-router.post('/jquerytest', function(req, res, next) {
+router.post('/uploadInfo', function(req, res, next) {
   content = req.body.content;
   title = req.body.title;
+  imgpath = req.body.imgpath;
 
   key = title + '.txt';
   token = uptoken(bucket, key);
@@ -44,7 +45,7 @@ router.post('/jquerytest', function(req, res, next) {
 
         var downloadUrl = policy.makeRequest(url + key);
         console.log(downloadUrl);
-        upDateDB(req, title, "", title + '.txt');
+        upDateDB(req, title, "", title + '.txt', imgpath);
 
         res.send("1");
         res.end();
@@ -74,11 +75,12 @@ function uploadFile(uptoken, key, localFile, callback) {
   qiniu.io.putFile(uptoken, key, localFile, extra, callback);
 }
 
-function upDateDB(req, headline, subtitle, filename) {
+function upDateDB(req, headline, subtitle, filename, imgpath) {
   var newRecord = {};
   newRecord.headline = headline;
   newRecord.subtitle = subtitle;
   newRecord.filename = filename;
+  newRecord.imgpath = imgpath;
   newRecord.createdate = new Date().getTime();
   newRecord.lasteditdate = new Date().getTime();
 

@@ -6,6 +6,7 @@ var connection =null;
 function setUp(db,cb){
   require('./articles')(orm,db);
   require('./users')(orm,db);
+  require('./categy')(orm,db);
 
   return cb(null,db);
 }

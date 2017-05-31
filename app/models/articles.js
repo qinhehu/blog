@@ -7,26 +7,30 @@ module.exports = function(orm, db) {
     headline: String,
     subtitle: String,
     filename: String,
+    imgpath: String,
     createdate: String,
     lasteditdate: String
-  },{
-    methods:{
-      serialize:function(){
+  }, {
+    methods: {
+      serialize: function() {
         var article;
 
-        if(this.article){
-          article = this.article.map(function(c){return c.serialize();});
-        }else{
+        if (this.article) {
+          article = this.article.map(function(c) {
+            return c.serialize();
+          });
+        } else {
           article = [];
         }
 
-        return{
-          id:this.id,
-          headline:this.headline,
-          subtitle :this.subtitle,
+        return {
+          id: this.id,
+          headline: this.headline,
+          subtitle: this.subtitle,
           filename: this.filename,
-          createdate:this.createdate,
-          lasteditdate:this.lasteditdate
+          imgpath: this.imgpath,
+          createdate: this.createdate,
+          lasteditdate: this.lasteditdate
         };
       }
     }
