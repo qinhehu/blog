@@ -12,7 +12,7 @@ router.post('/', function(req, res, next) {
     newRecord.username = req.body.account;
     newRecord.password = req.body.password;
     newRecord.createdate = new Date();
-    req.models.User.create(newRecord, function(err, results) {
+    req.models.users.create(newRecord, function(err, results) {
         if (err) {
             return next(err);
         }

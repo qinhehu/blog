@@ -1,5 +1,5 @@
 module.exports = function(orm, db) {
-  var users = db.define("user", {
+  var users = db.define("users", {
     id: {
       type: 'serial',
       key: true

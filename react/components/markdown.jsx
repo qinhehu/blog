@@ -11,6 +11,7 @@ var Markdown = React.createClass({
     },
     rawMarkup: function() {
         var rawMarkup = marked(this.state.value.toString());
+        console.log(rawMarkup);
         return {__html: rawMarkup};
     },
     render: function() {

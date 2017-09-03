@@ -15,24 +15,43 @@ block content
           h4.modal-title#myModalLabel 提醒
         .modal-body
           input.form-control#title(type="text",placeholder="起个标题吧")
-          br
-          input.form-control#img(type="text",placeholder="首页美图")
+          input.form-control#img(type="text",placeholder="首页美图",style="margin-top:15px;")
+          textarea.form-control#summary(type="text",placeholder="简介",style="resize: none;margin-top:15px;margin-bottom:15px;",maxlength="100")
+          button.btn.btn-link#addTag(style="padding:0px") Add Tag
+          #tag
+          script(src='static/tag.js')
         .modal-footer
           button.btn.btn-default(type="button",data-dismiss="modal") 关闭
           button.btn.btn-primary#upload(type="button") 提交
   script.
     $(document).ready(function(){
+      var tagArray=new Array() ;
       $("button#upload").click(function(){
-        console.log($("#title").val());
-        $.post('/editor/uploadInfo',{content:$(".markdown_preview").html(),title:$("#title").val(),imgpath:$("#img").val()},function(data){
-          if(data == 1){
-            $("button#upload").text("SUCCESS");
-            $("button#upload").attr({"disabled":"disabled"});
-            console.log("success");
-          }else{
-            $("button#upload").text("FAILD,TRY TO REATY");
-            console.log("faild");
-          }
+        $(".tag").each(function(){
+          tagArray.push($(this).text().substr(0,$(this).text().length-1));
         });
+        jQuery.ajaxSettings.traditional = true;
+        $.post(
+          '/editor/uploadInfo',
+          {content:$(".markdown_preview").html(),title:$("#title").val(),imgpath:$("#img").val(),summary:$("#summary").val(),tags:tagArray},
+          function(data){
+            if(data == 1){
+              $("button#upload").text("SUCCESS");
+              $("button#upload").attr({"disabled":"disabled"});
+              console.log("success");
+            }else{
+              $("button#upload").text("FAILD,TRY TO REATY");
+              console.log("faild");
+            }
+        });
+      });
+
+      $("button#addTag").click(function(){
+        $(this).hide();
+      });
+
+      $(".list-inline").on("click",'#tagClose',function(){
+        console.log($(this).parent().attr("id")) ;
+        $(this).parent().hide();
       });
     });

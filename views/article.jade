@@ -1,0 +1,27 @@
+extends layout
+
+append extraHeader
+  link(rel='stylesheet',href = '//cdn.bootcss.com/github-markdown-css/2.6.0/github-markdown.min.css')
+  link(rel="stylesheet" href="//cdn.bootcss.com/material-design-lite/1.3.0/material.indigo-pink.min.css")
+  link(rel='stylesheet',href = '/stylesheets/style.css')
+data = data
+block content
+  div(style="margin-bottom:30px;margin-left:30px")
+    a(href="/",style="font-size:30px;font-weight: bold;") 沁河
+  div.markdown-body
+    #articleContent.col-md-9
+      .mdl-spinner.mdl-js-spinner.is-active
+    .col-md-3(style="padding:0px")
+      ul.nav.nav-pills.nav-stacked.col-md-3#floor(style="position: fixed;padding-right:25px;padding-left:0px")
+  script.
+    $(document).ready(function(){
+      $.get("!{data}", function(result) {
+        $("div#articleContent").addClass('mdl-shadow--2dp');
+        $("div#articleContent").css("background-color","#fff");
+        $("div#articleContent").html(result);
+        $("h1, h2, h3, h4, h5, h6").each(function(){
+          $("#floor").append("<li><a href=#"+$(this).text()+">"+$(this).text()+"</a></li>");
+        });
+        $('body').scrollspy();
+      });
+    });

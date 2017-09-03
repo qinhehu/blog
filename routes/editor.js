@@ -3,6 +3,8 @@ var router = express.Router();
 var fs = require("fs");
 var path = require('path');
 var qiniu = require("qiniu");
+var jwt = require('jsonwebtoken');
+var uuidV1 = require('uuid/v1');
 
 //需要填写你的 Access Key 和 Secret Key
 qiniu.conf.ACCESS_KEY = '';
@@ -16,18 +18,22 @@ bucket = 'blog';
 // key = title+'.html';
 //要上传文件的本地路径
 filePath = path.resolve(__dirname, '..') + '/' + fileName
-//构建私有空间的链接
-url = '';
-var policy = new qiniu.rs.GetPolicy();
 
 router.get('/', function(req, res, next) {
-  res.render('editor');
+  try {
+    var decoded = jwt.verify(req.cookies.token, 'qinhesh~!#');
+    res.render('editor');
+  } catch (err) {
+    res.redirect('login');
+  }
 });
 
 router.post('/uploadInfo', function(req, res, next) {
   content = req.body.content;
   title = req.body.title;
   imgpath = req.body.imgpath;
+  summary = req.body.summary;
+  tags = req.body.tags;
 
   key = title + '.txt';
   token = uptoken(bucket, key);
@@ -40,12 +46,8 @@ router.post('/uploadInfo', function(req, res, next) {
 
     uploadFile(token, title + '.txt', filePath, function(err, ret) {
       if (!err) {
-        // 上传成功， 处理返回值
-        console.log(ret.hash, ret.key, ret.persistentId);
 
-        var downloadUrl = policy.makeRequest(url + key);
-        console.log(downloadUrl);
-        upDateDB(req, title, "", title + '.txt', imgpath);
+        upDateDB(req, title, "", title + '.txt', imgpath, summary, tags);
 
         res.send("1");
         res.end();
@@ -75,14 +77,18 @@ function uploadFile(uptoken, key, localFile, callback) {
   qiniu.io.putFile(uptoken, key, localFile, extra, callback);
 }
 
-function upDateDB(req, headline, subtitle, filename, imgpath) {
+function upDateDB(req, headline, subtitle, filename, imgpath, summary, tags) {
+  console.log(tags);
   var newRecord = {};
   newRecord.headline = headline;
   newRecord.subtitle = subtitle;
+  newRecord.summary = summary;
   newRecord.filename = filename;
   newRecord.imgpath = imgpath;
   newRecord.createdate = new Date().getTime();
   newRecord.lasteditdate = new Date().getTime();
+  newRecord.tags = tags.join(",");
+  newRecord.guid = uuidV1();
 
   req.models.articles.create(newRecord, function(err, results) {
     if (err) {

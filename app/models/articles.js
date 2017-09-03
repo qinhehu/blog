@@ -6,10 +6,13 @@ module.exports = function(orm, db) {
     },
     headline: String,
     subtitle: String,
+    summary: String,
     filename: String,
     imgpath: String,
     createdate: String,
-    lasteditdate: String
+    lasteditdate: String,
+    tags: String,
+    guid: String
   }, {
     methods: {
       serialize: function() {
@@ -27,10 +30,13 @@ module.exports = function(orm, db) {
           id: this.id,
           headline: this.headline,
           subtitle: this.subtitle,
+          summary: this.summary,
           filename: this.filename,
           imgpath: this.imgpath,
           createdate: this.createdate,
-          lasteditdate: this.lasteditdate
+          lasteditdate: this.lasteditdate,
+          tags: this.tags,
+          guid: this.guid
         };
       }
     }

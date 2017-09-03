@@ -3,7 +3,8 @@ var webpack = require('webpack');
 module.exports = {
     entry: {
         markdown:'./react/markdown.js',
-        article_preview:'./react/article_preview.js'
+        article_preview:'./react/article_preview.js',
+        tag:'./react/tag.js'
     },
     output: {
         path: __dirname + '/static',

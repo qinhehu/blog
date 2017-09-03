@@ -3,29 +3,19 @@ extends layout
 append extraHeader
   link(rel='stylesheet',href = '/stylesheets/style.css')
   link(rel='stylesheet',href = '//cdn.bootcss.com/github-markdown-css/2.6.0/github-markdown.min.css')
+  link(rel='stylesheet',href='//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+  
 block content
+  div.col-md-8.col-md-offset-2(style="margin-bottom:30px;")
+    a(href="/",style="font-size:30px;font-weight: bold;") 沁河
   div.row
-    div.col-md-9
-      #content
+    div.col-md-8.col-md-offset-2
+      div#content(style="text-align:center;")
       script(src='static/article_preview.js')
-    div.col-md-3
-      div.article-preview
-        div.content
-          p.text-center 分类
-          ul.list-group
-            li.list-group-item
-              | android
-              span.badge 14
-            li.list-group-item
-              | iOS
-              span.badge 14
-      div.article-preview
-        div.content
-          p.text-center 文章
-          ul.list-group
-            li.list-group-item
-              | 5月
-              span.badge 14
-            li.list-group-item
-              | 4月
-              span.badge 14
+  script.
+    $(document).ready(function(){
+      $(".col-md-8").on("click",'.mdl-card__media',function(){
+        var target = $(this).find('a').attr("href");
+        location.href = target;
+      });
+    });

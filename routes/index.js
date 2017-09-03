@@ -5,26 +5,16 @@ var qiniu = require("qiniu");
 var url = require('url');
 var http = require('http');
 
-//构建私有空间的链接
-link = '';
-var policy = new qiniu.rs.GetPolicy();
-
-
-
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {title: '沁河'});
 });
-// router.get("/", controllers.articles.list);
 
-router.get('/getArticle', controllers.articles.list);
+router.get('/getArticle/:pageNum', function(req, res, next) {
+  pageNum = req.params.pageNum;
 
-router.get('/getDownloadURl',function(req, res, next){
-  console.log("123");
-  var params = url.parse(req.url, true).query;
-  var key = params.key;
-  var downloadUrl = policy.makeRequest(link + key);
-  res.send(downloadUrl);
+  controllers.articles.list(req, res, next, pageNum);
 });
+
+router.get('/getArticleSize', controllers.articles.count);
 
 module.exports = router;

@@ -22,3 +22,28 @@
 html, body {
   height: 100%;
 }
+
+ul .tag {
+  background-color: #f1f8ff;
+  padding-left: 9.6px;
+  margin-right: 4.8px;
+  margin-top: 10px;
+}
+
+ul .tag button {
+  background-color: #f1f8ff;
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+  border-left: 1px solid #b4d9ff;
+  margin-left: 8px;
+  outline: none;
+}
+
+ul .tag button:hover {
+  background-color: #ddeeff;
+}
+
+ul li input:focus {
+  outline: none;
+}
