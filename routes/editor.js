@@ -5,10 +5,11 @@ var path = require('path');
 var qiniu = require("qiniu");
 var jwt = require('jsonwebtoken');
 var uuidV1 = require('uuid/v1');
+var settings = require("../config/settings");
 
 //需要填写你的 Access Key 和 Secret Key
-qiniu.conf.ACCESS_KEY = '';
-qiniu.conf.SECRET_KEY = '';
+qiniu.conf.ACCESS_KEY = settings.qiniu.ACCESS_KEY;
+qiniu.conf.SECRET_KEY = settings.qiniu.SECRET_KEY;
 
 fileName = "article.txt";
 
@@ -29,6 +30,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/uploadInfo', function(req, res, next) {
+  console.log(settings.qiniu.ACCESS_KEY);
+  console.log(settings.qiniu.SECRET_KEY);  
+
   content = req.body.content;
   title = req.body.title;
   imgpath = req.body.imgpath;
